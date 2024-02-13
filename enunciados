@@ -1,0 +1,23 @@
+Ejercicios tipo examen para practicar: 
+
+
+
+Crea una API para una biblioteca: 
+ Endpoints:
+Introducir libro (POST) (titulo, num.paginas)
+Obtener todos los libros de nuestra base de datos (GET)
+Borrar libro (POST)
+Modelo que se tendria que utilizar: 
+Class Libro Atributos (titulo, num.paginas)
+
+
+
+Crea una API para una escuela para gestionar alumnos:
+Endpoints:
+Introducir alumno (POST) (nombre, dni)
+Obtener todos los alumnos(GET)
+Borrar alumno (POST)
+Modelo que se tendria que utilizar: 
+Class Libro Atributos (dni, nombre)
+
+Enviar mensaje a #general

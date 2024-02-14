@@ -1,52 +1,51 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Biblioteca
+from .models import Escuela
 from django.views.decorators.csrf import csrf_exempt
 import json
 import pdb
 
-
+# Create your views here.
 
 #Esta función listará todos mis usuarios y contraseñas
-def list_titulos(request):
+def list_alumnos(request):
     
     # Vista para obtener todas las contraseñas y devolverlas en formato JSON.
-    titulos = Biblioteca.objects.all()    # Le asigno el valor de mostrarlo todo. 
-    data = [{'titulo': titulo.titulo, 'num_paginas': titulo.num_paginas} for titulo in titulos] # Le asigno el valor del json 
+    titulos = Escuela.objects.all()    # Le asigno el valor de mostrarlo todo. 
+    data = [{'titulo': titulo.nombre, 'num_paginas': titulo.dni} for titulo in titulos] # Le asigno el valor del json 
     return JsonResponse({'titulos': data})
 
 
 
 @csrf_exempt    # Utilizo el @crsf_exempt, para así poder usarlos mediante el POST
 #Esta función añadirá un nuevo usuario.
-def add_titulo(request):
+def add_alumno(request):
  
     data = request.POST
         
     # Lo convierto a string, ya que me llega en b(bites) y no puedo operar así.
     my_json = json.loads(request.body.decode('utf8').replace("'", '"'))
     
-    titulo = my_json['titulo']
-    num_paginas = my_json['num_paginas']
+    nombre = my_json['alumno']
+    dni = my_json['dni']
     
     # Aqui filtro, ya que es un POST para así a ese usuario asignarle la función elegida
-    Biblioteca.objects.create(titulo=titulo, num_paginas=num_paginas)
+    Escuela.objects.create(nombre=nombre, dni=dni)
     return JsonResponse({'Su contraseña se ha guardado con exito' : '.'})
-
 
 
 @csrf_exempt    # Utilizo el @crsf_exempt, para así poder usarlos mediante el POST
 #Esta función eliminará el usuario y la contraseña
-def delete_titulo(request):
+def delete_alumno(request):
     
     data = request.POST
     
     # Lo convierto a string, ya que me llega en b(bites) y no puedo operar así.
     my_json = json.loads(request.body.decode('utf8').replace("'", '"'))
 
-    titulo = my_json['titulo']
-    num_paginas = my_json['num_paginas']
+    nombre = my_json['nombre']
+    dni = my_json['dni']
     
     # Aqui filtro, ya que es un POST para así a ese usuario asignarle la función elegida
-    Biblioteca.objects.filter(titulo=titulo, num_paginas=num_paginas).delete()
+    Escuela.objects.filter(nombre=nombre, dni=dni).delete()
     return JsonResponse({'Su contraseña se ha eliminado con exito' : '.'})
